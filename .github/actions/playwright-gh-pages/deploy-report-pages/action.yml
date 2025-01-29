@@ -47,15 +47,23 @@ runs:
         publish_dir: all-reports
         destination_dir: ${{ steps.timestampid.outputs.timestamp }}/${{ github.event.number }}
 
-    - name: Build Markdown Table
-      run: ${{ github.action_path }}/build-markdown-table.sh
-      id: build-markdown-table
-      shell: bash
+    # - name: Build Markdown Table
+    #   run: ${{ github.action_path }}/build-markdown-table.sh
+    #   id: build-markdown-table
+    #   shell: bash
+    #   env:
+    #     GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+    #     GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
+    #     GITHUB_EVENT_NUMBER: ${{ github.event.number }}
+    #     TIMESTAMP: ${{ steps.timestampid.outputs.timestamp }}
+
+    - name: Generate Playwright Test Results Table
+      run: node ${{ github.action_path }}/generate-test-results.js
       env:
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
+        TIMESTAMP: ${{ github.run_id }}
         GITHUB_EVENT_NUMBER: ${{ github.event.number }}
-        TIMESTAMP: ${{ steps.timestampid.outputs.timestamp }}
 
     - name: Comment PR with Execution Details
       uses: thollander/actions-comment-pull-request@v3
