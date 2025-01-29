@@ -59,6 +59,7 @@ runs:
 
     - name: Generate Playwright Test Results Table
       run: node ${{ github.action_path }}/generate-test-results.js
+      shell: bash
       env:
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
