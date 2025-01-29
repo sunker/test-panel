@@ -74,7 +74,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     needs: build
-    if: ${{ needs.build.outputs.has-e2e == 'true' }}
     outputs:
       matrix: ${{ steps.resolve-versions.outputs.matrix }}
     steps:
