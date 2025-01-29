@@ -91,5 +91,4 @@ rows.sort((a, b) => {
 // Add sorted rows to table
 table += '\n' + rows.join('\n');
 
-// Export the table as an environment variable
-fs.appendFileSync(process.env.GITHUB_ENV, `MARKDOWN_TABLE<<EOF\n${table}\nEOF\n`);
+console.log(table);
