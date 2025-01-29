@@ -58,7 +58,7 @@ runs:
     #     TIMESTAMP: ${{ steps.timestampid.outputs.timestamp }}
 
     - name: Generate Playwright Test Results Table
-      run: node ${{ github.action_path }}/generate-test-results.js
+      run: node ${{ github.action_path }}/build-pr-comment.js
       shell: bash
       env:
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
