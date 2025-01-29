@@ -146,7 +146,7 @@ jobs:
         run: docker compose down
 
   publish-report:
-    if: ${{ always() }}
+    if: ${{ (always() && !cancelled()) }}
     needs: [playwright-tests]
     runs-on: ubuntu-latest
     steps:
