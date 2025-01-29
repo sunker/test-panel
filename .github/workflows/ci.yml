@@ -192,28 +192,24 @@ jobs:
         id: run-tests
         run: npm run e2e
 
-      - name: Docker logs
-        if: ${{ always() && steps.run-tests.outcome == 'failure' }}
-        run: |
-          docker logs sunker-test-panel >& grafana-server.log
+      - name: Upload e2e test summary
+        # uses: grafana/plugin-actions/playwright-gh-pages/upload-report-artifacts@gh-pages
+        uses: ./.github/actions/playwright-gh-pages/upload-report-artifacts
+        if: ${{ always() }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-outcome: ${{ steps.run-tests.outcome }}
 
       - name: Stop grafana docker
         run: docker compose down
 
-      - name: Upload server log
-        uses: actions/upload-artifact@v4
-        if: ${{ always() && steps.run-tests.outcome == 'failure' }}
+  publish-report:
+    if: ${{ always() }}
+    needs: [playwright-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish report
+        # uses: grafana/plugin-actions/playwright-gh-pages/deploy-report-pages@gh-pages
+        uses: ./.github/actions/playwright-gh-pages/deploy-report-pages
         with:
-          name: ${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}-server-log
-          path: grafana-server.log
-          retention-days: 5
-
-      # Uncomment this step to upload the Playwright report to Github artifacts.
-      # If your repository is public, the report will be public on the Internet so beware not to expose sensitive information.
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v4
-      #   if: ${{ always() && steps.run-tests.outcome == 'failure' }}
-      #   with:
-      #     name: playwright-report-${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}
-      #     path: playwright-report/
-      #     retention-days: 5
+          github-token: ${{ secrets.GITHUB_TOKEN }}
