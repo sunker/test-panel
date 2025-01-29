@@ -208,6 +208,8 @@ jobs:
     needs: [playwright-tests]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Publish report
         # uses: grafana/plugin-actions/playwright-gh-pages/deploy-report-pages@gh-pages
         uses: ./.github/actions/playwright-gh-pages/deploy-report-pages
