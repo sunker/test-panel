@@ -47,8 +47,6 @@ runs:
     - name: Set initiator variable
       shell: bash
       run: |
-        - name: Set JOB_INITIATOR
-      run: |
         if [[ -n "${{ github.event.number }}" ]]; then
           echo "JOB_INITIATOR=${{ github.event.number }}" >> "$GITHUB_ENV"
         elif [[ -n "${{ github.event.workflow_run }}" ]]; then
