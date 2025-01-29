@@ -9,8 +9,6 @@ on:
     branches:
       - master
       - main
-  schedule:
-    - cron: '*/10 * * * *' #Run e2e tests once a day at 11 UTC
 
 permissions:
   contents: write
