@@ -49,6 +49,8 @@ runs:
       run: |
         if [[ -n "${{ github.event.number }}" ]]; then
           echo "JOB_INITIATOR=${{ github.event.number }}" >> "$GITHUB_ENV"
+        else if [[ -n "${{ github.event.workflow_run }}" ]]; then
+          echo "JOB_INITIATOR=${{ github.event.workflow_run }}" >> "$GITHUB_ENV"
         else
           echo "JOB_INITIATOR=scheduled" >> "$GITHUB_ENV"
         fi
@@ -82,7 +84,7 @@ runs:
         comment-tag: test-results
         message: ${{ steps.generate-table.outputs.table }}
   
-    - name: Write URL in Action summary
+    - name: Write result table in Action summary
       shell: bash
       run: echo "${{ steps.generate-table.outputs.table }}" >> "$GITHUB_STEP_SUMMARY"
       
