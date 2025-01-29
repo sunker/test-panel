@@ -19,7 +19,8 @@ const summaryFiles = fs
 
 const usePluginName = summaryFiles.some((file) => {
   const content = fs.readFileSync(file, 'utf8');
-  return content.includes('PLUGIN_NAME=');
+  const match = content.match(/^PLUGIN_NAME=(.+)$/m);
+  return match && match[1].trim() !== '';
 });
 
 if (usePluginName) {

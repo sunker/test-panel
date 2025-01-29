@@ -63,7 +63,7 @@ runs:
       env:
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
-        TIMESTAMP: ${{ github.run_id }}
+        TIMESTAMP: ${{ steps.timestampid.outputs.timestamp }}
         GITHUB_EVENT_NUMBER: ${{ github.event.number }}
 
     - name: Comment PR with Execution Details
