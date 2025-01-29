@@ -85,7 +85,7 @@ fs.readdirSync(reportsDir).forEach((dir) => {
 // Sort rows by version (assuming <major>.<minor>.<patch> format)
 rows.sort((a, b) => {
   const getVersion = (row) => row.split('|')[usePluginName ? 3 : 2].trim();
-  return getVersion(a).localeCompare(getVersion(b), undefined, { numeric: true });
+  return getVersion(b).localeCompare(getVersion(a), undefined, { numeric: true });
 });
 
 // Add sorted rows to table
