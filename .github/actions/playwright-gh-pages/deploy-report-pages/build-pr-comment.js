@@ -104,11 +104,11 @@ async function buildPrComment() {
   });
 
   // Add sorted rows to table
-  table += '\n' + rows.join('\n');
+  table += '\n' + rows.join('\n') + '\n';
 
   if (uploadReportDisabled) {
     table +=
-      '⚠️  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the `upload-report-artifacts` Action.\n';
+      '\n ⚠️  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the `upload-report-artifacts` Action.\n';
   }
 
   const urlExist = await checkUrlExists(lastReportLink);
