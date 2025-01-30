@@ -35,6 +35,7 @@ runs:
 
     - name: Delete any existing comment
       uses: thollander/actions-comment-pull-request@v3
+      if: ${{ github.event.number != null }}
       with:
         comment-tag: gf-playwright-test-results
         mode: delete
@@ -49,12 +50,9 @@ runs:
       run: |
         if [[ -n "${{ github.event.number }}" ]]; then
           echo "JOB_INITIATOR=${{ github.event.number }}" >> "$GITHUB_ENV"
-        elif [[ -n "${{ github.event.workflow_run }}" ]]; then
-          echo "JOB_INITIATOR=${{ github.event.workflow_run }}" >> "$GITHUB_ENV"
         else
-          echo "JOB_INITIATOR=scheduled" >> "$GITHUB_ENV"
+          echo "JOB_INITIATOR=${{ github.run_id }}" >> "$GITHUB_ENV"
         fi
-
 
     - name: Push the new files to github pages
       uses: peaceiris/actions-gh-pages@v3
@@ -75,11 +73,11 @@ runs:
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
         TIMESTAMP: ${{ steps.timestampid.outputs.timestamp }}
-        GITHUB_EVENT_NUMBER: ${{ env.JOB_INITIATOR }}
+        JOB_INITIATOR: ${{ env.JOB_INITIATOR }}
 
     - name: Comment PR with Execution Details
       uses: thollander/actions-comment-pull-request@v3
-      if: ${{ inputs.pr-comment-summary == 'true' }}
+      if: ${{ inputs.pr-comment-summary == 'true' && github.event.number != null }}
       with:
         create-if-not-exists: true
         comment-tag: test-results
@@ -104,5 +102,5 @@ runs:
         branch: ${{ inputs.pages-branch }}
         commit_message: Delete folders older than n days
 
-    - name: Checkout code
-      uses: actions/checkout@v4
+    # - name: Checkout code
+    #   uses: actions/checkout@v4

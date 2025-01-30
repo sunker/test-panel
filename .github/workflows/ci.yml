@@ -84,8 +84,8 @@ jobs:
       - name: Resolve Grafana E2E versions
         id: resolve-versions
         uses: grafana/plugin-actions/e2e-version@main
-        # with:
-        #   skip-grafana-dev-image: true
+        with:
+          skip-grafana-dev-image: true
 
   playwright-tests:
     needs: [resolve-versions, build]
@@ -141,6 +141,7 @@ jobs:
         # uses: ./.github/actions/playwright-gh-pages/upload-report-artifacts
         if: ${{ always() }}
         with:
+          upload-reports: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-outcome: ${{ steps.run-tests.outcome }}
 
