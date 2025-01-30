@@ -45,7 +45,6 @@ async function buildPrComment() {
   let rows = [];
   let uploadReportDisabled = false;
   let lastReportLink = '';
-  const branchName = process.env.BRANCH_NAME;
 
   // Iterate through subdirectories
   fs.readdirSync(reportsDir).forEach((dir) => {
@@ -108,13 +107,26 @@ async function buildPrComment() {
 
   if (uploadReportDisabled) {
     table +=
-      '\n ⚠️  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the plugins ci.yml workflow.';
+      '\n ⚠️  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the plugins ci.yml workflow.\n';
   }
 
-  const urlExist = await checkUrlExists(lastReportLink);
-  if (!urlExist && !uploadReportDisabled) {
-    table += `\n ⛔   The reports were deployed to GitHub Pages, but it seems like GitHub Pages site has not yet been configured to deploy from the ${branchName} branch. For details on how to configure GH Pages, refer to the [README](https://github.com/grafana/plugin-actions/main/deploy-report-pages/README.md) for the deploy-report-pages Action.\n`;
-  }
+  const troubleshootingSection = `\n<details>
+
+<summary> Troubleshooting</summary>
+
+### 404 when clicking on "View report"
+
+By default, the deploy-report-pages Action deploys reports to the gh-pages branch. However, **you need to take an extra step** to ensure that GitHub Pages can build and serve the site from this branch. To do so:
+
+1. Go to the **Settings** tab of your repository.
+2. In the left-hand sidebar, click on **Pages**.
+3. Under **Source**, select **Deploy from a branch**, then choose the gh-pages branch.
+
+This action needs to be completed **manually** in order for your GitHub Pages site to be built and accessible from the gh-pages branch. Once configured, GitHub will automatically build and serve the site whenever new reports are deployed.
+
+</details>`;
+
+  table += troubleshootingSection;
 
   console.log(table);
 }
