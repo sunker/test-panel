@@ -70,10 +70,6 @@ fs.readdirSync(reportsDir).forEach((dir) => {
   const hasReport = fs.existsSync(path.join(dirPath, 'index.html'));
   const reportCell = hasReport ? `[View report](${reportLink})` : ' ';
 
-  if (!hasReport) {
-    console.warn(`Warning: index.html not found in ${dir}`);
-  }
-
   // Add row to table
   if (usePluginName) {
     rows.push(`| ${pluginName} | ${grafanaImage} | ${grafanaVersion} | ${resultEmoji} | ${reportCell} |`);

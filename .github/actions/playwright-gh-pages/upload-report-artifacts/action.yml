@@ -27,7 +27,7 @@ inputs:
     description: 'Pattern to prefix the artifact with. Default is "gf-playwright-report-".'
     required: false
     default: 'gf-playwright-report-'
-  upload-reports:
+  upload-report:
     description: 'Whether to upload the report as an artifact, no matter the outcome. Default is true.'
     default: true
     required: true
@@ -62,7 +62,7 @@ runs:
         
 
     - name: Skip uploading report report
-      if: ${{ inputs.upload-reports == 'false' || (inputs.upload-successful-reports == 'false' && inputs.test-outcome == 'success') }}
+      if: ${{ inputs.upload-report == 'false' || (inputs.upload-successful-reports == 'false' && inputs.test-outcome == 'success') }}
       shell: bash
       run: |
         rm -rf playwright-report/${{ inputs.grafana-image }}-${{ inputs.grafana-version }}/*
