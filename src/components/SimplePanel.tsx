@@ -3,11 +3,12 @@ import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import { css, cx } from '@emotion/css';
 import { useStyles2, useTheme2 } from '@grafana/ui';
-import { PanelDataErrorView } from '@grafana/runtime';
+import { PanelDataErrorView, usePluginComponent } from '@grafana/runtime';
 
 interface Props extends PanelProps<SimpleOptions> {}
 
 const getStyles = () => {
+  console.log(usePluginComponent);
   return {
     wrapper: css`
       font-family: Open Sans;
