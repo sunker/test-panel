@@ -108,12 +108,12 @@ async function buildPrComment() {
 
   if (uploadReportDisabled) {
     table +=
-      '\n > **_NOTE:_**  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the `upload-report-artifacts` Action.';
+      '\n > **📝 **  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the `upload-report-artifacts` Action.';
   }
 
   const urlExist = await checkUrlExists(lastReportLink);
   if (!urlExist) {
-    table += `\n > **_WARNING:_**  The reports were deployed to GitHub Pages, but it seems like GitHub Pages is not configured to deploy from ${branchName}. For details, refer to the [README](https://github.com/grafana/plugin-actions/main/deploy-report-pages/README.md) for the deploy-report-pages Action.`;
+    table += `\n > **⚠️**  The reports were deployed to GitHub Pages, but it seems like GitHub Pages is not configured to deploy from the ${branchName} branch. For details on how to configure GH Pages, refer to the [README](https://github.com/grafana/plugin-actions/main/deploy-report-pages/README.md) for the deploy-report-pages Action.`;
   }
 
   console.log(table);

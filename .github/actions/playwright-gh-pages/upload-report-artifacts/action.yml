@@ -73,8 +73,8 @@ runs:
         SUMMARY="GRAFANA_IMAGE=${{ inputs.grafana-image }}
         GRAFANA_VERSION=${{ inputs.grafana-version }}
         OUTPUT=${{ inputs.test-outcome }}
-        PLUGIN_NAME=${{ inputs.plugin-name }}"
-        UPLOAD_REPORT_ENABLED=${{ inputs.upload-report }}
+        PLUGIN_NAME=${{ inputs.plugin-name }}
+        UPLOAD_REPORT_ENABLED=${{ inputs.upload-report }}"
         echo "${SUMMARY}" > ./playwright-report/${{ steps.add-parent-dir.outputs.parent-dir }}/summary.txt
     
     - name: Set artifact name
