@@ -45,6 +45,7 @@ async function buildPrComment() {
   let rows = [];
   let uploadReportDisabled = false;
   let lastReportLink = '';
+  const branchName = process.env.BRANCH_NAME;
 
   // Iterate through subdirectories
   fs.readdirSync(reportsDir).forEach((dir) => {
@@ -72,7 +73,6 @@ async function buildPrComment() {
     const repoName = process.env.GITHUB_REPOSITORY_NAME;
     const timestamp = process.env.TIMESTAMP;
     const jobInitiator = process.env.JOB_INITIATOR;
-    const branchName = process.env.BRANCH;
 
     const reportLink = pluginName
       ? `https://${repoOwner}.github.io/${repoName}/${timestamp}/${jobInitiator}/${pluginName}-${grafanaImage}-${grafanaVersion}/`

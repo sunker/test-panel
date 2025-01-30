@@ -74,7 +74,7 @@ runs:
         GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
         TIMESTAMP: ${{ steps.timestampid.outputs.timestamp }}
         JOB_INITIATOR: ${{ env.JOB_INITIATOR }}
-        BRANCH: ${{ inputs.pages-branch }}
+        BRANCH_NAME: ${{ inputs.pages-branch }}
 
     - name: Comment PR with Execution Details
       uses: thollander/actions-comment-pull-request@v3
