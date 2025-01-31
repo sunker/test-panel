@@ -139,7 +139,7 @@ jobs:
       - name: Upload e2e test summary
         uses: grafana/plugin-actions/playwright-gh-pages/upload-report-artifacts@gh-pages
         # uses: ./.github/actions/playwright-gh-pages/upload-report-artifacts
-        if: ${{ always() }}
+        if: ${{ (always() && !cancelled()) }}
         with:
           # upload-report: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -160,3 +160,4 @@ jobs:
         # uses: ./.github/actions/playwright-gh-pages/deploy-report-pages
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          retention-days: 1
