@@ -9,13 +9,10 @@ on:
     branches:
       - master
       - main
-  schedule:
-    - cron: '*/10 * * * *' #Run e2e tests once a day at 11 UTC
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
-  pull-requests: write
 
 jobs:
   build:
@@ -84,8 +81,6 @@ jobs:
       - name: Resolve Grafana E2E versions
         id: resolve-versions
         uses: grafana/plugin-actions/e2e-version@main
-        # with:
-        #   skip-grafana-dev-image: true
 
   playwright-tests:
     needs: [resolve-versions, build]
@@ -138,26 +133,36 @@ jobs:
 
       - name: Upload e2e test summary
         uses: grafana/plugin-actions/playwright-gh-pages/upload-report-artifacts@main
-        # uses: ./.github/actions/playwright-gh-pages/upload-report-artifacts
-        if: ${{ (always() && !cancelled()) }}
+        if: ${{ always() && !cancelled() }}
         with:
-          # upload-report: true
+          upload-report: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-outcome: ${{ steps.run-tests.outcome }}
+
+      - name: Docker logs
+        if: ${{ always() && steps.run-tests.outcome == 'failure' }}
+        run: |
+          docker logs sampleorg-sample-panel >& grafana-server.log
 
       - name: Stop grafana docker
         run: docker compose down
 
+      # Uncomment this step to upload the server log to Github artifacts. Remember Github artifacts are public on the Internet if the repository is public.
+      # - name: Upload server log
+      #   uses: actions/upload-artifact@v4
+      #   if: ${{ always() && steps.run-tests.outcome == 'failure' }}
+      #   with:
+      #     name: ${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}-server-log
+      #     path: grafana-server.log
+      #     retention-days: 5
+
   publish-report:
-    if: ${{ (always() && !cancelled()) }}
+    if: ${{ always() && !cancelled() }}
     needs: [playwright-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Publish report
         uses: grafana/plugin-actions/playwright-gh-pages/deploy-report-pages@main
-        # uses: ./.github/actions/playwright-gh-pages/deploy-report-pages
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          retention-days: 1
