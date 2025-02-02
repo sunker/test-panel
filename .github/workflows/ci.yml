@@ -139,14 +139,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-outcome: ${{ steps.run-tests.outcome }}
 
-      - name: Docker logs
-        if: ${{ always() && steps.run-tests.outcome == 'failure' }}
-        run: |
-          docker logs sampleorg-sample-panel >& grafana-server.log
-
-      - name: Stop grafana docker
-        run: docker compose down
-
       # Uncomment this step to upload the server log to Github artifacts. Remember Github artifacts are public on the Internet if the repository is public.
       # - name: Upload server log
       #   uses: actions/upload-artifact@v4
