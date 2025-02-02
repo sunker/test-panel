@@ -45,6 +45,7 @@ async function buildPrComment() {
   let rows = [];
   let uploadReportDisabled = false;
   let lastReportLink = '';
+  let failedTests = false;
 
   // Iterate through subdirectories
   fs.readdirSync(reportsDir).forEach((dir) => {
@@ -66,6 +67,9 @@ async function buildPrComment() {
     const testOutput = getValue('OUTPUT');
     const pluginName = getValue('PLUGIN_NAME');
     uploadReportDisabled = getValue('UPLOAD_REPORT_ENABLED') === 'false';
+    if (testOutput === 'failure') {
+      failedTests = true;
+    }
 
     // Construct report link
     const repoOwner = process.env.GITHUB_REPOSITORY_OWNER;

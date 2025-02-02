@@ -1,6 +1,5 @@
 name: 'Upload report and test summary to GitHub artifact'
 description: 'Uploads report and test summary as a GitHub artifact. Can be used together with the deploy-report-pages action to publish the reports to GitHub Pages.'
-author: 'frontend@grafana'
 
 outputs:
   artifact:
@@ -61,7 +60,7 @@ runs:
         echo "parent-dir=$parent_dir" >> $GITHUB_OUTPUT
         
 
-    - name: Skip uploading report report
+    - name: Exclude report from artifact 
       if: ${{ inputs.upload-report == 'false' || (inputs.upload-successful-reports == 'false' && inputs.test-outcome == 'success') }}
       shell: bash
       run: |
