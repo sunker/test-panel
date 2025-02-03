@@ -113,18 +113,12 @@ async function buildPrComment() {
   const ciLink = `https://github.com/${process.env.GITHUB_REPOSITORY_OWNER}/${process.env.GITHUB_REPOSITORY_NAME}/blob/main/.github/workflows/ci.yml`;
   if (uploadReportDisabled) {
     table += `
-    \n ⚠️  To make Playwright reports for failed tests publicly accessible on GitHub Pages, set the \`upload-report\` input to \`true\` in your [CI workflow](${ciLink}). For more details, refer to the [Developer Portal documentation](https://grafana.com/developers/plugin-tools/e2e-test-a-plugin/ci).
-
-
-
-
-
-
- \n`;
+    \n ⚠️  To make Playwright reports for failed tests publicly accessible on GitHub Pages, set the \`upload-report\` input to \`true\` in your [CI workflow](${ciLink}). For more details, refer to the [Developer Portal documentation](https://grafana.com/developers/plugin-tools/e2e-test-a-plugin/ci).\n`;
   } else {
     table += troubleshootingSection;
   }
 
+  core.setOutput('failedTests', failedTests);
   console.log(table);
 }
 
