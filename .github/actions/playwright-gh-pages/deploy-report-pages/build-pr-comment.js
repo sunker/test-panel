@@ -109,10 +109,11 @@ async function buildPrComment() {
   // Add sorted rows to table
   table += '\n' + rows.join('\n') + '\n';
 
-  ciLink = 'https://github.com/${repoOwner}/${repoName}/blob/main/.github/workflows/ci.yml';
+  const ciLink = `https://github.com/${repoOwner}/${repoName}/blob/main/.github/workflows/ci.yml`;
   if (uploadReportDisabled) {
-    table +=
-      '\n ⚠️  To deploy Playwright reports to GitHub Pages and make them publicly accessible, set the upload-report input to true in your [CI workflow](ciLink). Find more details in the [Develop Portal documentation](https://grafana.com/developers/plugin-tools/e2e-test-a-plugin/ci). \n';
+    table += `
+    \n ⚠️  To deploy Playwright reports to GitHub Pages and make them publicly accessible, set the \`upload-report\` input to \`true\` in your [CI workflow](${ciLink}). 
+    Find more details in the [Developer Portal documentation](https://grafana.com/developers/plugin-tools/e2e-test-a-plugin/ci). \n`;
   }
 
   const troubleshootingSection = `\n<details>
