@@ -109,9 +109,10 @@ async function buildPrComment() {
   // Add sorted rows to table
   table += '\n' + rows.join('\n') + '\n';
 
+  ciLink = 'https://github.com/${repoOwner}/${repoName}/blob/main/.github/workflows/ci.yml';
   if (uploadReportDisabled) {
     table +=
-      '\n ⚠️  To be able to browse the Playwright reports for failing end-to-end tests, enable the `upload-report` input in the plugins ci.yml workflow.\n';
+      '\n ⚠️  To deploy Playwright reports to GitHub Pages and make them publicly accessible, set the upload-report input to true in your CI workflow. Find more details in the [Develop Portal documentation](ciLink). \n';
   }
 
   const troubleshootingSection = `\n<details>
