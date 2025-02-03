@@ -137,7 +137,7 @@ jobs:
         # uses: grafana/plugin-actions/playwright-gh-pages/upload-report-artifacts@main
         if: ${{ always() && !cancelled() }}
         with:
-          upload-report: true
+          upload-report: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-outcome: ${{ steps.run-tests.outcome }}
 
