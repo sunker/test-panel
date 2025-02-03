@@ -5,15 +5,15 @@ const troubleshootingSection = `\n<details>
 
 <summary> Troubleshooting</summary>
 
-### 404 when clicking on "View report"
+### 404 when clicking on \`View report\`
 
-By default, the deploy-report-pages Action deploys reports to the gh-pages branch. However, **you need to take an extra step** to ensure that GitHub Pages can build and serve the site from this branch. To do so:
+By default, the \`deploy-report-pages\` Action deploys reports to the \`gh-pages\` branch. However, **you need to take an extra step** to ensure that GitHub Pages can build and serve the site from this branch. To do so:
 
 1. Go to the **Settings** tab of your repository.
 2. In the left-hand sidebar, click on **Pages**.
 3. Under **Source**, select **Deploy from a branch**, then choose the gh-pages branch.
 
-This action needs to be completed **manually** in order for your GitHub Pages site to be built and accessible from the gh-pages branch. Once configured, GitHub will automatically build and serve the site whenever new reports are deployed.
+This action needs to be completed **manually** in order for your GitHub Pages site to be built and accessible from the \`gh-pages\` branch. Once configured, GitHub will automatically build and serve the site whenever new reports are deployed.
 
 </details>`;
 
