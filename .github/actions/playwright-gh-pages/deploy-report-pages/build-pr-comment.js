@@ -118,7 +118,6 @@ async function buildPrComment() {
     table += troubleshootingSection;
   }
 
-  core.setOutput('failedTests', failedTests);
   console.log(table);
 }
 
