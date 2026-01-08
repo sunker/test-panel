@@ -16,7 +16,6 @@ test('should display circle when data is passed to the panel', async ({
   page,
   grafanaVersion,
 }) => {
-  test.fail(semver.gte(grafanaVersion, '11.3.0'), 'failing test');
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   await panelEditPage.datasource.set(ds.name);
   await panelEditPage.setVisualization('Test');
