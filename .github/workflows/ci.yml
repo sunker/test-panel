@@ -83,7 +83,8 @@ jobs:
         id: resolve-versions
         uses: grafana/plugin-actions/e2e-version@e2e-versions/support-react-image
         with:
-          skip-grafana-dev-image: true
+          skip-grafana-dev-image: false
+          skip-grafana-react-image: false
 
   playwright-tests:
     needs: [resolve-versions, build]
